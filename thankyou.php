@@ -3,6 +3,8 @@ require 'includes/functions.php';
 
 $username = filterUserName($_GET['username']);
 
+var_dump($_SESSION);
+
 if($_GET['from'] == 'login')
 {
     $message = 'Thank you '.$username.' for logging in!';
