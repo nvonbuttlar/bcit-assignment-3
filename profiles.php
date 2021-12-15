@@ -24,7 +24,6 @@ if(count($_FILES) > 0)
     else
     {
         if ($_GET['update_pp']) {
-            echo"here";
             updateProfile($_GET['update_pp'], $_FILES);
         } else {
             saveProfile($_SESSION['username'], $_FILES);
