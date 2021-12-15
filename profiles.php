@@ -23,7 +23,13 @@ if(count($_FILES) > 0)
     }
     else
     {
-        saveProfile($_SESSION['username'], $_FILES);
+        if ($_GET['update_pp']) {
+            echo"here";
+            updateProfile($_GET['update_pp'], $_FILES);
+        } else {
+            saveProfile($_SESSION['username'], $_FILES);
+        }
+        
     }
 }
 

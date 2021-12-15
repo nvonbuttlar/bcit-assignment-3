@@ -4,17 +4,8 @@
   session_start();
 
   if($_GET['id']) {
-    // echo "HELLO";
-    // var_dump($_GET);
-
     $profile = getProfile($_GET['id']);
-
-    var_dump($profile);
-
-  } else {
-    echo "NOOO";
   }
-
 
 ?>
 
@@ -30,10 +21,10 @@
 
 <div id="editProfile">
 <div class="modal-dialog" role="document">
-    <form role="form" method="post" action="profiles.php" enctype="multipart/form-data">
+    <form role="form" method="post" action="profiles.php?update_pp=<?php echo $_GET['id'] ?>" enctype="multipart/form-data">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <a href="profiles.php" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
             <h4 class="modal-title">New Profile</h4>
         </div>
         <div class="modal-body">

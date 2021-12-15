@@ -150,6 +150,26 @@ function saveProfile($username, $file)
     return false;
 }
 
+function updateProfile($id, $file)
+{
+    $id_int = intval($id);
+    $picture = md5( $id_int.time());
+    $moved   = move_uploaded_file($file['picture']['tmp_name'], 'profiles/'.$picture);
+
+    if($moved)
+    {
+        $link   = connect();
+        $query  = 'update profiles set picture = "'.$picture.'" where id = "'.$id_int.'"';
+
+        $result = mysqli_query($link, $query);
+
+        mysqli_close($link);
+        return $result;
+    }
+
+    return false;
+}
+
 /**
  * @return bool|mysqli_result
  */
