@@ -39,7 +39,7 @@ if (isset($_GET['edit_password'])) {
     if ($new_password == $confirm_password && preg_match('/((?=.*[a-z])(?=.*[0-9])(?=.*[!?|@])){8}/', trim($new_password))) {
         updatePassword($user, $old_password, $new_password);
     } else {
-        echo "invalid password, try aagain";
+        echo "invalid password, please try again";
     }
 }
 ?>
@@ -88,10 +88,22 @@ if (isset($_GET['edit_password'])) {
                                 </span>
                 ';
 
-                if($profile['username'] == $_SESSION['username'] || $_SESSION['admin'])
+                if($_SESSION['admin'])
                 {
                     echo '
                                 <span class="pull-right text-muted">
+                                    <a class="" href="edit.php?id='.$profile['id'].'">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                </span>
+                                
+                            ';
+                }
+
+                if($profile['username'] == $_SESSION['username'] || $_SESSION['admin'])
+                {
+                    echo '
+                                <span class="pull-right text-muted" style="margin-right: 10px">
                                     <a class="" href="delete.php?id='.$profile['id'].'">
                                         <i class="fa fa-trash"></i> Delete
                                     </a>
@@ -104,13 +116,13 @@ if (isset($_GET['edit_password'])) {
                     echo '
                         <span class="pull-right text-muted" style="margin-right: 10px">
                             <a class="" href="null" data-toggle="modal" data-target="#newPassword">
-                                <i class="fa fa-edit"></i> New Password
+                                <i class="fa fa-gear"></i> Password
                             </a>
                         </span>
                         ';
                 }
 
-                echo '
+                    echo '
                             </div>
                             <div class="panel-body">
                                 <p class="text-muted">

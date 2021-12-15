@@ -156,7 +156,7 @@ function saveProfile($username, $file)
 function getAllProfiles()
 {
     $link     = connect();
-    $query    = 'select * from profiles';
+    $query    = 'select * from profiles order by username';
     $profiles = mysqli_query($link, $query);
 
     mysqli_close($link);
@@ -197,3 +197,18 @@ function updatePassword($user, $old_pass, $new_pass)
 
 }
 
+function getProfile($id)
+{
+    $link    = connect();
+    $query   = 'select * from profiles where id = "'.$id.'"';
+    $success = mysqli_query($link, $query);
+    $data = []; 
+
+    while($row = mysqli_fetch_array($success)) 
+    {
+        return $row;
+    }
+
+    mysqli_close($link);
+    // return $row;
+}
