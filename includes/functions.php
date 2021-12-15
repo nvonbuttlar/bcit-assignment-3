@@ -170,13 +170,30 @@ function getAllProfiles()
  * @param $username
  * @return bool returns true on deletion success or false on failure
  */
-function deleteProfile($id, $username)
+function deleteProfile($id)
 {
     $link    = connect();
-    $query   = 'delete from profiles where id = "'.$id.'" and username = "'.$username.'"';
+    $query   = 'delete from profiles where id = "'.$id.'"';
     $success = mysqli_query($link, $query);
 
     mysqli_close($link);
     return $success;
+}
+
+function updatePassword($user, $old_pass, $new_pass)
+{
+
+    $hash_old_pass = md5($old_pass . SALT);
+    $hash_new_pass = md5($new_pass . SALT);
+    
+    $link     = connect();
+
+    $query    = 'update accounts set password = "'. $hash_new_pass .'" where password = "'. $hash_old_pass .'" and username = "'. $user .'"';
+    
+    $success = mysqli_query($link, $query);
+    mysqli_close($link);
+    
+    return $success;
+
 }
 

@@ -3,7 +3,6 @@ require 'includes/functions.php';
 
 $username = filterUserName($_GET['username']);
 
-var_dump($_SESSION);
 
 if($_GET['from'] == 'login')
 {

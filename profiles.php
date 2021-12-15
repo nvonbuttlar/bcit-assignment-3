@@ -28,6 +28,20 @@ if(count($_FILES) > 0)
 }
 
 $profiles = getAllProfiles();
+
+
+if (isset($_GET['edit_password'])) {
+    $user = $_SESSION['username'];
+    $old_password = $_POST['old_password'];
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];   
+    
+    if ($new_password == $confirm_password && preg_match('/((?=.*[a-z])(?=.*[0-9])(?=.*[!?|@])){8}/', trim($new_password))) {
+        updatePassword($user, $old_password, $new_password);
+    } else {
+        echo "invalid password, try aagain";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,7 +88,7 @@ $profiles = getAllProfiles();
                                 </span>
                 ';
 
-                if($profile['username'] == $_SESSION['username'])
+                if($profile['username'] == $_SESSION['username'] || $_SESSION['admin'])
                 {
                     echo '
                                 <span class="pull-right text-muted">
@@ -82,7 +96,18 @@ $profiles = getAllProfiles();
                                         <i class="fa fa-trash"></i> Delete
                                     </a>
                                 </span>
+                                
                             ';
+                }
+                if($profile['username'] == $_SESSION['username'])
+                {
+                    echo '
+                        <span class="pull-right text-muted" style="margin-right: 10px">
+                            <a class="" href="null" data-toggle="modal" data-target="#newPassword">
+                                <i class="fa fa-edit"></i> New Password
+                            </a>
+                        </span>
+                        ';
                 }
 
                 echo '
@@ -117,12 +142,43 @@ $profiles = getAllProfiles();
         <div class="modal-body">
                 <div class="form-group">
                     <label>Username</label>
-                    <input class="form-control" value="<?php echo $_SESSION['username'];?>" disabled" disabled>
+                    <input class="form-control" value="<?php echo $_SESSION['username'];?>" disabled>
                 </div>
                 <div class="form-group">
                     <label>Profile Picture</label>
                     <input class="form-control" type="file" name="picture">
                 </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Submit!"/>
+        </div>
+    </div><!-- /.modal-content -->
+    </form>
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="newPassword" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog" role="document">
+    <form role="form" method="post" action="profiles.php?edit_password=true" enctype="multipart/form-data">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">New Password</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Old Password</label>
+                <input class="form-control" name="old_password" value="">
+            </div>
+            <div class="form-group">
+                <label>New Password</label>
+                <input class="form-control" name="new_password" value="">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input class="form-control" name="confirm_password" value="">
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

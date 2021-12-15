@@ -8,7 +8,7 @@ if(!isset($_SESSION['loggedin']))
     exit();
 }
 
-if (preg_match("/^[0-9]+$/", $_GET['id']))
+if ($_GET['id'])
 {
     deleteProfile($_GET['id'], $_SESSION['username']);
 }
